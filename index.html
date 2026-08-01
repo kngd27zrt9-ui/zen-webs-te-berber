@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<!-- Bu satır tarayıcıya "bu modern bir HTML sayfası" der. -->
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <!-- Telefonlarda da düzgün görünmesi için: -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cece Barber</title>
+
+  <!-- Görünüm (renkler, arka plan) bu dosyadan gelir: -->
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+
+  <!-- ============================================= -->
+  <!-- KATMAN 1 = ARKA PLAN (l'arrière-plan)         -->
+  <!-- En arkada duran fotoğraf/karartma bu.         -->
+  <!-- ============================================= -->
+  <div class="arka-plan"></div>
+
+  <!-- ============================================= -->
+  <!-- KATMAN 2 = ÖN PLAN (le premier plan)          -->
+  <!-- Menü, butonlar, kartlar... üstte duran her şey.-->
+  <!-- ============================================= -->
+
+  <!-- Üst menü -->
+  <header class="menu">
+    <div class="logo">CECE <span>BARBER</span></div>
+    <nav>
+      <a href="#hizmetler">Services</a>
+      <a href="#galeri">Galerie</a>
+      <a href="#iletisim">Contact</a>
+    </nav>
+  </header>
+
+  <!-- Karşılama bölümü (hero) -->
+  <section class="karsilama">
+    <h1>CECE BARBER</h1>
+    <p>Coupe moderne, soin classique.</p>
+    <button class="buton randevu-ac">Prendre rendez-vous</button>
+  </section>
+
+  <!-- ============================================= -->
+  <!-- KATMAN 3 = YAZILAR VE FOTOĞRAFLAR (contenu)   -->
+  <!-- ============================================= -->
+
+  <!-- Hizmetler -->
+  <section id="hizmetler" class="bolum">
+    <h2>Nos services</h2>
+    <div class="kartlar">
+      <div class="kart">
+        <h3>Coupe de cheveux</h3>
+        <p>Coupe moderne adaptée à la forme du visage.</p>
+        <span class="sure">⏱ 30 min</span>
+        <span class="fiyat">250 ₺</span>
+        <button class="buton buton-kucuk randevu-ac" data-hizmet="Coupe de cheveux">Prendre rendez-vous</button>
+      </div>
+      <div class="kart">
+        <h3>Barbe &amp; Rasage</h3>
+        <p>Rasage classique à la serviette chaude.</p>
+        <span class="sure">⏱ 15 min</span>
+        <span class="fiyat">150 ₺</span>
+        <button class="buton buton-kucuk randevu-ac" data-hizmet="Barbe &amp; Rasage">Prendre rendez-vous</button>
+      </div>
+      <div class="kart">
+        <h3>Cheveux + Barbe</h3>
+        <p>Forfait soin complet.</p>
+        <span class="sure">⏱ 45 min</span>
+        <span class="fiyat">350 ₺</span>
+        <button class="buton buton-kucuk randevu-ac" data-hizmet="Cheveux + Barbe">Prendre rendez-vous</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Galeri (fotoğraflar) -->
+  <section id="galeri" class="bolum">
+    <h2>Galerie</h2>
+    <div class="galeri">
+      <img src="Modern%20mullet%20middle%20part.jpg" alt="Mullet moderne, raie au milieu" />
+      <img src="indir.jpg" alt="Coupe dégradée avec frange bouclée" />
+      <img src="indir%20(1).jpg" alt="Coupe texturée avec dégradé bas" />
+    </div>
+  </section>
+
+  <!-- İletişim -->
+  <section id="iletisim" class="bolum iletisim">
+    <h2>Contactez-nous</h2>
+    <p>📍 12 Rue Exemple</p>
+    <p>📞 0500 000 00 00</p>
+    <p>🕐 Tous les jours 09:00 - 20:00</p>
+    <button class="buton randevu-ac">Prendre rendez-vous</button>
+    <a href="tel:05000000000" class="buton buton-cizgi">Appeler maintenant</a>
+  </section>
+
+  <footer>
+    <p>© 2026 Cece Barber — Tous droits réservés.</p>
+  </footer>
+
+  <!-- ============================================= -->
+  <!-- RANDEVU PENCERESİ (modal)                     -->
+  <!-- "Randevu Al" butonlarına basınca açılır.      -->
+  <!-- ============================================= -->
+  <div class="randevu-katman" id="randevuKatman" hidden>
+    <div class="randevu-kutu">
+      <button class="randevu-kapat" id="randevuKapat" aria-label="Kapat">&times;</button>
+
+      <!-- 1) Form -->
+      <div id="randevuIcerik">
+        <h2>Prendre rendez-vous</h2>
+        <p class="randevu-alt">Réservation en ligne en moins de 30 secondes.</p>
+
+        <form id="randevuForm">
+          <!-- Hizmet seçimi -->
+          <span class="etiket">Service</span>
+          <div class="hizmet-secim">
+            <label class="hizmet-sec">
+              <input type="radio" name="hizmet" value="Coupe de cheveux" data-fiyat="250 ₺" data-sure="30 dk" required />
+              <span class="hizmet-govde">
+                <strong>Coupe de cheveux</strong>
+                <small>30 min</small>
+                <b>250 ₺</b>
+              </span>
+            </label>
+            <label class="hizmet-sec">
+              <input type="radio" name="hizmet" value="Barbe &amp; Rasage" data-fiyat="150 ₺" data-sure="15 dk" />
+              <span class="hizmet-govde">
+                <strong>Barbe &amp; Rasage</strong>
+                <small>15 min</small>
+                <b>150 ₺</b>
+              </span>
+            </label>
+            <label class="hizmet-sec">
+              <input type="radio" name="hizmet" value="Cheveux + Barbe" data-fiyat="350 ₺" data-sure="45 dk" />
+              <span class="hizmet-govde">
+                <strong>Cheveux + Barbe</strong>
+                <small>45 min</small>
+                <b>350 ₺</b>
+              </span>
+            </label>
+          </div>
+
+          <!-- Tarih & Saat -->
+          <div class="ikili">
+            <div>
+              <label class="etiket" for="tarih">Date</label>
+              <input type="date" id="tarih" name="tarih" required />
+            </div>
+            <div>
+              <label class="etiket" for="saat">Heure</label>
+              <select id="saat" name="saat" required>
+                <option value="" disabled selected>Choisir</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Ad & Telefon -->
+          <label class="etiket" for="ad">Nom complet</label>
+          <input type="text" id="ad" name="ad" placeholder="Votre nom et prénom" required />
+
+          <label class="etiket" for="tel">Téléphone</label>
+          <input type="tel" id="tel" name="tel" placeholder="06 xx xx xx xx" required />
+
+          <button type="submit" class="buton buton-tam">Confirmer le rendez-vous</button>
+        </form>
+      </div>
+
+      <!-- 2) Başarı ekranı -->
+      <div id="randevuBasari" hidden>
+        <div class="onay-ikon">✓</div>
+        <h2>Votre rendez-vous est confirmé !</h2>
+        <p id="basariMetin"></p>
+        <button class="buton buton-tam" id="basariKapat">OK</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Küçük hareketler bu dosyadan gelir: -->
+  <script src="script.js"></script>
+</body>
+</html>

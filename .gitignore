@@ -1,0 +1,11 @@
+# Randevu kayıtları — müşteri bilgisi içerir, paylaşılmaz (sunucu yoksa boş oluşturur)
+randevular.json
+
+# Node
+node_modules/
+npm-debug.log*
+
+# Sistem / editör
+.DS_Store
+Thumbs.db
+.vscode/

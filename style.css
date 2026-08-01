@@ -1,0 +1,413 @@
+/* ==========================================================
+   CECE BARBER — Görünüm dosyası (siyah & beyaz)
+   Burada renkleri, katmanları ve yerleşimi ayarlıyoruz.
+   ========================================================== */
+
+/* Renkleri tek yerden yönetmek için "değişkenler" tanımlıyoruz.
+   Sonra rengi değiştirmek istersen sadece burayı değiştir. */
+:root {
+  --siyah: #0d0d0d;
+  --beyaz: #ffffff;
+  --gri:   #b3b3b3;
+}
+
+/* Tüm sayfa için genel sıfırlama (boşlukları temizler). */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  background-color: var(--siyah);
+  color: var(--beyaz);
+  line-height: 1.6;
+}
+
+/* ---------- KATMAN 1: ARKA PLAN ---------- */
+/* Sayfanın en arkasında sabit duran fotoğraf + karartma. */
+.arka-plan {
+  position: fixed;      /* sayfa kayarken yerinde durur */
+  inset: 0;             /* dört kenara tam yapışır */
+  z-index: -1;          /* her şeyin ARKASINDA kalır */
+  overflow: hidden;
+  /* Video yüklenene kadar / açılmazsa yedek olarak fotoğraf görünür. */
+  background: var(--siyah) url("foto%20arka%20plan.jpg") center / cover no-repeat;
+}
+
+/* Arka plandaki video — tüm ekranı bozmadan kaplar. */
+.arka-video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;   /* videoyu bozmadan ekrana yayar */
+}
+
+/* Videonun üstünde hafif karartma — yazılar okunsun diye. */
+.arka-plan::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(rgba(0,0,0,0.45), rgba(0,0,0,0.65));
+}
+
+/* ---------- KATMAN 2: ÖN PLAN (menü) ---------- */
+.menu {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 40px;
+  position: sticky;   /* yukarıda yapışık kalır */
+  top: 0;
+  background: rgba(0,0,0,0.6);
+  backdrop-filter: blur(6px);  /* arkasını hafif bulanıklaştırır */
+  z-index: 10;
+}
+
+.logo {
+  font-size: 24px;
+  font-weight: bold;
+  letter-spacing: 2px;
+}
+.logo span {
+  color: var(--gri);
+}
+
+nav a {
+  color: var(--beyaz);
+  text-decoration: none;
+  margin-left: 25px;
+  font-size: 15px;
+  transition: color 0.3s;
+}
+nav a:hover {
+  color: var(--gri);
+}
+
+/* Karşılama bölümü */
+.karsilama {
+  min-height: 85vh;   /* ekranın büyük kısmını kaplar */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 20px;
+}
+.karsilama h1 {
+  font-size: 64px;
+  letter-spacing: 6px;
+}
+.karsilama p {
+  color: var(--gri);
+  font-size: 20px;
+  margin: 15px 0 30px;
+}
+
+/* Butonlar */
+.buton {
+  display: inline-block;
+  background: var(--beyaz);
+  color: var(--siyah);
+  padding: 14px 34px;
+  text-decoration: none;
+  font-weight: bold;
+  letter-spacing: 1px;
+  border-radius: 2px;
+  transition: transform 0.2s, background 0.3s;
+}
+.buton:hover {
+  transform: translateY(-3px);
+  background: var(--gri);
+}
+
+/* Butonun küçük ve "sadece çerçeve" varyantları */
+.buton-kucuk {
+  padding: 10px 22px;
+  font-size: 14px;
+  margin-top: 15px;
+}
+.buton-cizgi {
+  background: transparent;
+  color: var(--beyaz);
+  border: 1px solid var(--beyaz);
+  margin-left: 12px;
+}
+.buton-cizgi:hover {
+  background: var(--beyaz);
+  color: var(--siyah);
+}
+/* <button> öğesi de link gibi görünsün */
+button.buton {
+  border: none;
+  cursor: pointer;
+  font-family: inherit;
+}
+
+/* ---------- KATMAN 3: YAZILAR VE FOTOĞRAFLAR ---------- */
+.bolum {
+  background: var(--siyah);
+  padding: 80px 40px;
+  text-align: center;
+}
+.bolum h2 {
+  font-size: 38px;
+  margin-bottom: 40px;
+  letter-spacing: 3px;
+}
+
+/* Hizmet kartları */
+.kartlar {
+  display: flex;
+  gap: 25px;
+  justify-content: center;
+  flex-wrap: wrap;   /* telefonda alt alta iner */
+}
+.kart {
+  background: #1a1a1a;
+  border: 1px solid #2b2b2b;
+  padding: 35px 25px;
+  width: 280px;
+  border-radius: 4px;
+  transition: transform 0.3s, border-color 0.3s;
+}
+.kart:hover {
+  transform: translateY(-8px);
+  border-color: var(--beyaz);
+}
+.kart h3 {
+  font-size: 22px;
+  margin-bottom: 10px;
+}
+.kart p {
+  color: var(--gri);
+  margin-bottom: 15px;
+}
+.kart .sure {
+  display: block;
+  color: var(--gri);
+  font-size: 14px;
+  margin-bottom: 6px;
+}
+.fiyat {
+  display: block;
+  font-size: 24px;
+  font-weight: bold;
+}
+
+/* Galeri */
+.galeri {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 15px;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+.galeri img {
+  width: 100%;
+  height: 260px;
+  object-fit: cover;   /* fotoğrafı bozmadan kutuya sığdırır */
+  border-radius: 4px;
+  filter: grayscale(100%);  /* siyah-beyaz tema için gri yapar */
+  transition: filter 0.4s, transform 0.4s;
+}
+.galeri img:hover {
+  filter: grayscale(0%);   /* üzerine gelince renklenir */
+  transform: scale(1.03);
+}
+
+/* İletişim */
+.iletisim {
+  background: #111;
+}
+.iletisim p {
+  font-size: 18px;
+  margin: 8px 0;
+}
+.iletisim .buton {
+  margin-top: 25px;
+}
+
+/* Alt bilgi */
+footer {
+  background: #000;
+  text-align: center;
+  padding: 25px;
+  color: var(--gri);
+  font-size: 14px;
+}
+
+/* ---------- RANDEVU PENCERESİ (modal) ---------- */
+/* Sayfanın üstünü karartan katman */
+.randevu-katman {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  background: rgba(0, 0, 0, 0.75);
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+/* "hidden" özelliği varken pencere KAPALI kalsın.
+   (display:flex, tarayıcının [hidden]=none kuralını ezdiği için gerekli.) */
+.randevu-katman[hidden] {
+  display: none;
+}
+/* Ortadaki kutu */
+.randevu-kutu {
+  position: relative;
+  background: #141414;
+  border: 1px solid #2b2b2b;
+  border-radius: 8px;
+  width: 100%;
+  max-width: 460px;
+  max-height: 90vh;
+  overflow-y: auto;
+  padding: 30px;
+  animation: acil 0.25s ease;
+}
+@keyframes acil {
+  from { opacity: 0; transform: translateY(15px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.randevu-kapat {
+  position: absolute;
+  top: 12px;
+  right: 16px;
+  background: none;
+  border: none;
+  color: var(--gri);
+  font-size: 30px;
+  line-height: 1;
+  cursor: pointer;
+  transition: color 0.2s;
+}
+.randevu-kapat:hover { color: var(--beyaz); }
+
+.randevu-kutu h2 {
+  font-size: 26px;
+  letter-spacing: 2px;
+  margin-bottom: 6px;
+}
+.randevu-alt {
+  color: var(--gri);
+  font-size: 14px;
+  margin-bottom: 22px;
+}
+
+/* Form alanları */
+.etiket {
+  display: block;
+  font-size: 13px;
+  color: var(--gri);
+  margin: 16px 0 8px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+#randevuForm input[type="text"],
+#randevuForm input[type="tel"],
+#randevuForm input[type="date"],
+#randevuForm select {
+  width: 100%;
+  background: #0d0d0d;
+  border: 1px solid #333;
+  color: var(--beyaz);
+  padding: 12px 14px;
+  border-radius: 4px;
+  font-size: 15px;
+  font-family: inherit;
+}
+#randevuForm input:focus,
+#randevuForm select:focus {
+  outline: none;
+  border-color: var(--beyaz);
+}
+/* Takvim ikonunu beyaza çevir (koyu tema) */
+#randevuForm input[type="date"]::-webkit-calendar-picker-indicator {
+  filter: invert(1);
+  cursor: pointer;
+}
+
+/* Hizmet seçim kartları */
+.hizmet-secim {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.hizmet-sec { cursor: pointer; }
+.hizmet-sec input {
+  position: absolute;
+  opacity: 0;         /* radio'yu gizle, kartı tıklat */
+}
+.hizmet-govde {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: #0d0d0d;
+  border: 1px solid #333;
+  border-radius: 4px;
+  padding: 12px 14px;
+  transition: border-color 0.2s, background 0.2s;
+}
+.hizmet-govde strong { flex: 1; font-weight: 600; }
+.hizmet-govde small { color: var(--gri); font-size: 13px; }
+.hizmet-govde b { font-size: 16px; }
+/* Seçili hizmet vurgusu */
+.hizmet-sec input:checked + .hizmet-govde {
+  border-color: var(--beyaz);
+  background: #1e1e1e;
+}
+
+/* Tarih + Saat yan yana */
+.ikili {
+  display: flex;
+  gap: 12px;
+}
+.ikili > div { flex: 1; }
+
+.buton-tam {
+  width: 100%;
+  margin-top: 24px;
+  text-align: center;
+}
+
+/* Başarı ekranı */
+#randevuBasari {
+  text-align: center;
+  padding: 20px 0;
+}
+.onay-ikon {
+  width: 64px;
+  height: 64px;
+  margin: 0 auto 18px;
+  border-radius: 50%;
+  background: var(--beyaz);
+  color: var(--siyah);
+  font-size: 34px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+#basariMetin {
+  color: var(--gri);
+  margin: 10px 0 6px;
+  line-height: 1.7;
+}
+
+/* ---------- TELEFON UYUMU ---------- */
+/* Ekran küçükse yazıları küçültüp menüyü sadeleştiriyoruz. */
+@media (max-width: 600px) {
+  .karsilama h1 { font-size: 40px; }
+  .menu { flex-direction: column; gap: 10px; }
+  nav a { margin: 0 10px; }
+
+  /* İletişimdeki iki buton alt alta */
+  .buton-cizgi { margin-left: 0; margin-top: 12px; }
+  /* Modal telefonda: tarih/saat alt alta */
+  .ikili { flex-direction: column; }
+  .randevu-kutu { padding: 24px 20px; }
+}
