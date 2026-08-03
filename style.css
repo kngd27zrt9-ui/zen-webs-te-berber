@@ -50,7 +50,7 @@ body {
   content: "";
   position: absolute;
   inset: 0;
-  background: linear-gradient(rgba(0,0,0,0.45), rgba(0,0,0,0.65));
+  background: linear-gradient(rgba(0,0,0,0.40), rgba(0,0,0,0.55));
 }
 
 /* ---------- KATMAN 2: ÖN PLAN (menü) ---------- */
@@ -61,9 +61,13 @@ body {
   padding: 20px 40px;
   position: sticky;   /* yukarıda yapışık kalır */
   top: 0;
-  background: rgba(0,0,0,0.6);
-  backdrop-filter: blur(6px);  /* arkasını hafif bulanıklaştırır */
+  background: transparent;   /* siyah zemin kaldırıldı, foto görünsün */
   z-index: 10;
+}
+/* Zemin olmadığı için yazılar fotoğrafın üstünde okunsun diye gölge */
+.menu .logo,
+.menu nav a {
+  text-shadow: 0 2px 8px rgba(0,0,0,0.7);
 }
 
 .logo {
@@ -99,11 +103,13 @@ nav a:hover {
 .karsilama h1 {
   font-size: 64px;
   letter-spacing: 6px;
+  text-shadow: 0 3px 14px rgba(0,0,0,0.7);
 }
 .karsilama p {
-  color: var(--gri);
+  color: var(--beyaz);
   font-size: 20px;
   margin: 15px 0 30px;
+  text-shadow: 0 2px 10px rgba(0,0,0,0.7);
 }
 
 /* Butonlar */
@@ -147,8 +153,10 @@ button.buton {
 }
 
 /* ---------- KATMAN 3: YAZILAR VE FOTOĞRAFLAR ---------- */
+/* Bölümler SAYDAM — böylece kaydırırken arkadaki fotoğraf hep görünür.
+   Okunurluk için yazılara hafif gölge veriyoruz. */
 .bolum {
-  background: var(--siyah);
+  background: transparent;
   padding: 80px 40px;
   text-align: center;
 }
@@ -156,6 +164,7 @@ button.buton {
   font-size: 38px;
   margin-bottom: 40px;
   letter-spacing: 3px;
+  text-shadow: 0 2px 8px rgba(0,0,0,0.6);
 }
 
 /* Hizmet kartları */
@@ -166,7 +175,8 @@ button.buton {
   flex-wrap: wrap;   /* telefonda alt alta iner */
 }
 .kart {
-  background: #1a1a1a;
+  background: rgba(20,20,20,0.78);
+  backdrop-filter: blur(6px);
   border: 1px solid #2b2b2b;
   padding: 35px 25px;
   width: 280px;
@@ -204,11 +214,12 @@ button.buton {
   gap: 15px;
   max-width: 1000px;
   margin: 0 auto;
+  align-items: start;   /* fotoğraflar gerilip bozulmasın */
 }
 .galeri img {
   width: 100%;
-  height: 260px;
-  object-fit: cover;   /* fotoğrafı bozmadan kutuya sığdırır */
+  height: auto;          /* KIRPMA YOK — saç kesiminin tamamı görünür */
+  display: block;
   border-radius: 4px;
   filter: grayscale(100%);  /* siyah-beyaz tema için gri yapar */
   transition: filter 0.4s, transform 0.4s;
@@ -220,11 +231,12 @@ button.buton {
 
 /* İletişim */
 .iletisim {
-  background: #111;
+  background: transparent;
 }
 .iletisim p {
   font-size: 18px;
   margin: 8px 0;
+  text-shadow: 0 2px 8px rgba(0,0,0,0.6);
 }
 .iletisim .buton {
   margin-top: 25px;
@@ -232,7 +244,7 @@ button.buton {
 
 /* Alt bilgi */
 footer {
-  background: #000;
+  background: rgba(0,0,0,0.55);
   text-align: center;
   padding: 25px;
   color: var(--gri);
