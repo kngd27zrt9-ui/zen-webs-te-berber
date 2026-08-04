@@ -1,0 +1,12 @@
+{
+  "name": "cece-barber",
+  "version": "1.0.0",
+  "description": "Cece Barber - site vitrine + reservation en ligne",
+  "private": true,
+  "scripts": {
+    "start": "node sunucu.js"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}

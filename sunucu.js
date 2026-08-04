@@ -4,7 +4,7 @@ const fs = require('fs');
 const path = require('path');
 
 const KLASOR = __dirname;
-const PORT = 8000;
+const PORT = process.env.PORT || 8000;
 const KAYIT_YOLU = path.join(KLASOR, 'randevular.json');
 
 const tipler = {
@@ -20,7 +20,7 @@ const tipler = {
 // ==========================================================
 // BERBER AYARLARI — çalışma saatleri ve hizmet süreleri
 // ==========================================================
-const ACILIS  = 8 * 60 + 30;   // 08:30  (dakika cinsinden = 510)
+const ACILIS  = 8 * 60;        // 08:00  (dakika cinsinden = 480)
 const KAPANIS = 18 * 60 + 30;  // 18:30  (dakika cinsinden = 1110)
 const ADIM    = 15;            // randevu başlangıçları 15 dk aralıklarla
 

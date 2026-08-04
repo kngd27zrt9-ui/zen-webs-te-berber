@@ -214,11 +214,12 @@ button.buton {
   gap: 15px;
   max-width: 1000px;
   margin: 0 auto;
-  align-items: start;   /* fotoğraflar gerilip bozulmasın */
+  align-items: start;
 }
 .galeri img {
   width: 100%;
-  height: auto;          /* KIRPMA YOK — saç kesiminin tamamı görünür */
+  height: 320px;         /* tüm fotoğraflar aynı boyda */
+  object-fit: cover;     /* oran korunur, boşluk kalmaz */
   display: block;
   border-radius: 4px;
   filter: grayscale(100%);  /* siyah-beyaz tema için gri yapar */
