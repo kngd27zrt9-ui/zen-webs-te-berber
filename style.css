@@ -89,6 +89,39 @@ nav a {
 nav a:hover {
   color: var(--gri);
 }
+/* "Berber Girişi" linki — çerçeveli vurgu */
+.menu-vurgu {
+  border: 1px solid var(--beyaz);
+  padding: 7px 16px;
+  border-radius: 4px;
+}
+.menu-vurgu:hover {
+  background: var(--beyaz);
+  color: var(--siyah) !important;
+}
+
+/* Hamburger düğmesi (varsayılan gizli — sadece mobilde görünür) */
+.hamburger {
+  display: none;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 8px;
+  z-index: 20;
+}
+.hamburger span {
+  display: block;
+  width: 26px;
+  height: 2px;
+  background: var(--beyaz);
+  margin: 6px 0;
+  border-radius: 2px;
+  transition: transform 0.3s, opacity 0.3s;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.6);
+}
+.hamburger.acik span:nth-child(1) { transform: translateY(8px) rotate(45deg); }
+.hamburger.acik span:nth-child(2) { opacity: 0; }
+.hamburger.acik span:nth-child(3) { transform: translateY(-8px) rotate(-45deg); }
 
 /* Karşılama bölümü */
 .karsilama {
@@ -251,6 +284,19 @@ footer {
   color: var(--gri);
   font-size: 14px;
 }
+/* Berber paneli girişi — diskret alt link */
+.footer-link {
+  color: var(--gri);
+  text-decoration: none;
+  font-size: 12px;
+  letter-spacing: 1px;
+  opacity: 0.6;
+  transition: opacity 0.2s, color 0.2s;
+}
+.footer-link:hover {
+  opacity: 1;
+  color: var(--beyaz);
+}
 
 /* ---------- RANDEVU PENCERESİ (modal) ---------- */
 /* Sayfanın üstünü karartan katman */
@@ -375,6 +421,32 @@ footer {
   background: #1e1e1e;
 }
 
+/* Kuaför seçim düğmeleri (pills) */
+.kuafor-secim {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+.kuafor-yukleniyor { color: var(--gri); font-size: 14px; }
+.kuafor-sec { cursor: pointer; }
+.kuafor-sec input {
+  position: absolute;
+  opacity: 0;   /* radio'yu gizle, kutuyu tıklat */
+}
+.kuafor-govde {
+  display: inline-block;
+  background: #0d0d0d;
+  border: 1px solid #333;
+  border-radius: 4px;
+  padding: 10px 22px;
+  font-size: 15px;
+  transition: border-color 0.2s, background 0.2s;
+}
+.kuafor-sec input:checked + .kuafor-govde {
+  border-color: var(--beyaz);
+  background: #1e1e1e;
+}
+
 /* Tarih + Saat yan yana */
 .ikili {
   display: flex;
@@ -415,8 +487,38 @@ footer {
 /* Ekran küçükse yazıları küçültüp menüyü sadeleştiriyoruz. */
 @media (max-width: 600px) {
   .karsilama h1 { font-size: 40px; }
-  .menu { flex-direction: column; gap: 10px; }
-  nav a { margin: 0 10px; }
+
+  /* Mobil: logo solda, hamburger sağda; menü açılır panel */
+  .menu { justify-content: space-between; align-items: center; }
+  .hamburger { display: block; }
+  nav {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    left: 0;
+    background: rgba(13,13,13,0.97);
+    backdrop-filter: blur(10px);
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease;
+    border-top: 1px solid #2b2b2b;
+  }
+  nav.acik { max-height: 420px; }
+  nav a {
+    margin: 0;
+    padding: 15px 26px;
+    border-bottom: 1px solid #1e1e1e;
+    text-shadow: none;
+  }
+  .menu-vurgu {
+    border: none;
+    border-radius: 0;
+    color: var(--beyaz);
+  }
+  .menu-vurgu:hover { background: transparent; color: var(--gri) !important; }
 
   /* İletişimdeki iki buton alt alta */
   .buton-cizgi { margin-left: 0; margin-top: 12px; }

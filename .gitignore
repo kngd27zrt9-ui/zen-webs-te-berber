@@ -1,6 +1,9 @@
 # Randevu kayıtları — müşteri bilgisi içerir, paylaşılmaz (sunucu yoksa boş oluşturur)
 randevular.json
 
+# Ortam değişkenleri — Supabase gizli anahtarı burada, ASLA paylaşılmaz
+.env
+
 # Node
 node_modules/
 npm-debug.log*
