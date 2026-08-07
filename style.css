@@ -502,9 +502,9 @@ footer {
     max-height: 0;
     overflow: hidden;
     transition: max-height 0.3s ease;
-    border-top: 1px solid #2b2b2b;
   }
-  nav.acik { max-height: 420px; }
+  /* Gri ayraç çizgisi yalnız menü AÇIKKEN görünsün (kapalıyken çizgi olmasın) */
+  nav.acik { max-height: 420px; border-top: 1px solid #2b2b2b; }
   nav a {
     margin: 0;
     padding: 15px 26px;
