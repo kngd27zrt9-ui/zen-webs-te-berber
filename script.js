@@ -4,20 +4,55 @@
 // sayfa sertçe zıplamak yerine yumuşakça kaysın.
 // ==========================================================
 
-// Menüdeki tüm linkleri seçiyoruz:
-const linkler = document.querySelectorAll('nav a');
+// ---- Hamburger (mobil) menü ----
+const hamburger = document.getElementById('hamburger');
+const anaMenu = document.getElementById('anaMenu');
 
-// Her birine "tıklanınca ne olsun" davranışı ekliyoruz:
+function menuKapat() {
+  if (anaMenu) anaMenu.classList.remove('acik');
+  if (hamburger) { hamburger.classList.remove('acik'); hamburger.setAttribute('aria-expanded', 'false'); }
+}
+if (hamburger && anaMenu) {
+  hamburger.addEventListener('click', function (olay) {
+    olay.stopPropagation();
+    const acik = anaMenu.classList.toggle('acik');
+    hamburger.classList.toggle('acik', acik);
+    hamburger.setAttribute('aria-expanded', acik ? 'true' : 'false');
+  });
+  // Menü dışına tıklayınca kapat
+  document.addEventListener('click', function (olay) {
+    if (anaMenu.classList.contains('acik') && !anaMenu.contains(olay.target) && olay.target !== hamburger) {
+      menuKapat();
+    }
+  });
+}
+
+// ---- Menü linkleri ----
+const linkler = document.querySelectorAll('nav a');
 linkler.forEach(function (link) {
   link.addEventListener('click', function (olay) {
-    olay.preventDefault(); // tarayıcının varsayılan zıplamasını durdur
+    const href = this.getAttribute('href');
 
-    const hedefId = this.getAttribute('href'); // örn: "#galeri"
-    const hedef = document.querySelector(hedefId);
-
-    if (hedef) {
-      hedef.scrollIntoView({ behavior: 'smooth' }); // yumuşak kaydır
+    // "Prendre rendez-vous" (randevu-ac): modalı aç, sayfayı zıplatma
+    if (this.classList.contains('randevu-ac')) {
+      olay.preventDefault();
+      menuKapat();
+      return; // modalı .randevu-ac handler'ı açar
     }
+    // Sayfa içi çapa (#hizmetler vb.): yumuşak kaydır
+    if (href && href.charAt(0) === '#') {
+      olay.preventDefault();
+      menuKapat();
+      if (href.length > 1) {
+        const hedef = document.querySelector(href);
+        if (hedef) hedef.scrollIntoView({ behavior: 'smooth' });
+      } else {
+        window.scrollTo({ top: 0, behavior: 'smooth' }); // "Accueil" -> en üste
+      }
+      return;
+    }
+    // Dış link (/admin gibi): normal git, önce menüyü kapat
+    menuKapat();
   });
 });
 
@@ -33,6 +68,7 @@ const kapatBtn = document.getElementById('randevuKapat');
 const form     = document.getElementById('randevuForm');
 const saatSec  = document.getElementById('saat');
 const tarihGir = document.getElementById('tarih');
+const kuaforSecim = document.getElementById('kuaforSecim');
 const icerik   = document.getElementById('randevuIcerik');
 const basari   = document.getElementById('randevuBasari');
 const basariMetin = document.getElementById('basariMetin');
@@ -61,19 +97,56 @@ function seciliSure() {
   return parseInt(secili.dataset.sure, 10) || 30; // data-sure="30 dk"
 }
 
-// 3) Hizmet + tarih seçilince MÜSAİT saatleri sunucudan çek ve listele.
+// Seçili kuaförü bul.
+function seciliKuafor() {
+  const secili = form.querySelector('input[name="kuafor"]:checked');
+  return secili ? secili.value : null;
+}
+
+// Kuaförleri sunucudan (/api/kuaforler) çek ve seçim düğmelerini oluştur.
+async function kuaforleriYukle() {
+  try {
+    const cevap = await fetch('/api/kuaforler');
+    const veri = await cevap.json();
+    const liste = veri.kuaforler || [];
+    kuaforSecim.innerHTML = '';
+    liste.forEach(function (isim) {
+      const label = document.createElement('label');
+      label.className = 'kuafor-sec';
+      const input = document.createElement('input');
+      input.type = 'radio';
+      input.name = 'kuafor';
+      input.value = isim;
+      input.required = true;
+      const govde = document.createElement('span');
+      govde.className = 'kuafor-govde';
+      govde.textContent = isim;
+      label.appendChild(input);
+      label.appendChild(govde);
+      kuaforSecim.appendChild(label);
+      // Kuaför değişince o kuaförün boş saatlerini yenile
+      input.addEventListener('change', saatleriGuncelle);
+    });
+  } catch (e) {
+    kuaforSecim.innerHTML = '<span class="kuafor-yukleniyor">Coiffeurs indisponibles</span>';
+  }
+}
+kuaforleriYukle();
+
+// 3) Kuaför + hizmet + tarih seçilince MÜSAİT saatleri sunucudan çek ve listele.
 async function saatleriGuncelle() {
+  const kuafor = seciliKuafor();
   const sure = seciliSure();
   const tarih = tarihGir.value;
 
-  if (!sure || !tarih) {
-    saatMesaji('Choisissez d\'abord un service et une date');
+  if (!kuafor || !sure || !tarih) {
+    saatMesaji('Choisissez un coiffeur, un service et une date');
     return;
   }
 
   saatMesaji('Chargement...');
   try {
-    const cevap = await fetch('/api/musaitlik?tarih=' + tarih + '&sure=' + sure);
+    const cevap = await fetch('/api/musaitlik?tarih=' + tarih + '&sure=' + sure + '&kuafor=' + encodeURIComponent(kuafor));
     const veri = await cevap.json();
 
     if (!veri.saatler || veri.saatler.length === 0) {
@@ -154,6 +227,7 @@ form.addEventListener('submit', async function (olay) {
   olay.preventDefault();
 
   const veri = {
+    kuafor: seciliKuafor(),
     hizmet: form.hizmet.value,
     tarih:  form.tarih.value,
     saat:   form.saat.value,
@@ -188,7 +262,8 @@ form.addEventListener('submit', async function (olay) {
   });
   basariMetin.innerHTML =
     '<strong>' + veri.ad + '</strong>, votre rendez-vous est confirmé :<br>' +
-    veri.hizmet + ' (' + seciliSure() + ' min)<br>' + tarihGosterim + ' — ' + veri.saat;
+    veri.hizmet + ' (' + seciliSure() + ' min) avec <strong>' + veri.kuafor + '</strong><br>' +
+    tarihGosterim + ' — ' + veri.saat;
 
   icerik.hidden = true;
   basari.hidden = false;

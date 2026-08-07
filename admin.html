@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cece Barber — Dashboard</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="admin.css" />
+</head>
+<body>
+  <div class="arka-plan"></div>
+
+  <!-- ================= GİRİŞ EKRANI ================= -->
+  <div class="giris-orta" id="girisEkran" hidden>
+    <div class="giris-kutu">
+      <h1>CECE <span style="color:var(--gri)">BARBER</span></h1>
+      <p class="alt">Espace coiffeur — connexion</p>
+      <form id="girisForm">
+        <label for="email">E-mail</label>
+        <input type="email" id="email" autocomplete="username" required />
+        <label for="sifre">Mot de passe</label>
+        <input type="password" id="sifre" autocomplete="current-password" required />
+        <div class="giris-hata" id="girisHata"></div>
+        <button type="submit" class="modal-buton" id="girisBtn">Se connecter</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- ================= DASHBOARD ================= -->
+  <div class="dash" id="dashEkran" hidden>
+
+    <!-- Üst bar -->
+    <div class="dash-ust">
+      <div class="dash-logo">CECE <span>BARBER</span></div>
+      <div class="bosluk"></div>
+      <div class="dash-berber">
+        <b id="berberAd">—</b>
+        <small id="berberMail">—</small>
+      </div>
+      <button class="zil" id="zilBtn" aria-label="Notifications">🔔<span class="zil-sayi" id="zilSayi" hidden>0</span></button>
+      <button class="cikis-btn" id="cikisBtn">Déconnexion</button>
+    </div>
+
+    <!-- Bildirim paneli -->
+    <div class="bildirim-panel" id="bildirimPanel" hidden>
+      <div class="basl">Notifications</div>
+      <div id="bildirimListe"></div>
+    </div>
+
+    <!-- Sekmeler -->
+    <div class="dash-nav">
+      <button data-sec="dashboard" class="aktif">Tableau de bord</button>
+      <button data-sec="takvim">Calendrier</button>
+      <button data-sec="musteriler">Clients</button>
+    </div>
+
+    <div class="dash-icerik">
+
+      <!-- ===== ANA SAYFA ===== -->
+      <section class="sec aktif" id="sec-dashboard">
+        <h2 class="sec-baslik" id="hosgeldin">Bienvenue</h2>
+        <div class="stat-izgara" id="statIzgara"></div>
+
+        <div class="alt-baslik">Aujourd'hui</div>
+        <div id="bugunListe"><div class="yukleniyor">Chargement…</div></div>
+
+        <div class="alt-baslik">À venir</div>
+        <div id="yaklasanListe"></div>
+      </section>
+
+      <!-- ===== TAKVİM ===== -->
+      <section class="sec" id="sec-takvim">
+        <div class="takvim-arac">
+          <div class="gorunum-sec" id="gorunumSec">
+            <button data-g="gun">Jour</button>
+            <button data-g="hafta">Semaine</button>
+            <button data-g="ay" class="aktif">Mois</button>
+          </div>
+          <div class="takvim-nav">
+            <button id="takvimOnceki" aria-label="Précédent">‹</button>
+            <span class="etk" id="takvimEtk">—</span>
+            <button id="takvimSonraki" aria-label="Suivant">›</button>
+          </div>
+        </div>
+        <div id="takvimIcerik"></div>
+        <div id="takvimGunDetay"></div>
+      </section>
+
+      <!-- ===== MÜŞTERİLER ===== -->
+      <section class="sec" id="sec-musteriler">
+        <input type="search" class="arama" id="musteriArama" placeholder="Rechercher un client (nom ou téléphone)…" />
+        <div id="musteriListe"></div>
+      </section>
+
+    </div>
+  </div>
+
+  <!-- ================= RANDEVU MODALI ================= -->
+  <div class="modal-katman" id="rvModalKatman" hidden>
+    <div class="modal" id="rvModal">
+      <button class="modal-kapat" id="rvModalKapat" aria-label="Fermer">&times;</button>
+      <h3 id="rvmAd">—</h3>
+      <p class="mus-tel"><a id="rvmTel" href="#" style="color:var(--gri)">—</a></p>
+
+      <div class="bilgi-satir"><span class="k">Service</span><span id="rvmHizmet">—</span></div>
+      <div class="bilgi-satir"><span class="k">Date</span><span id="rvmTarih">—</span></div>
+      <div class="bilgi-satir"><span class="k">Heure</span><span id="rvmSaat">—</span></div>
+      <div class="bilgi-satir"><span class="k">Durée</span><span id="rvmSure">—</span></div>
+      <div class="bilgi-satir"><span class="k">Prix</span><span id="rvmFiyat">—</span></div>
+      <div class="bilgi-satir"><span class="k">Statut</span><span id="rvmDurum">—</span></div>
+
+      <label>Statut</label>
+      <div class="durum-btnlar">
+        <button class="b-mavi"    data-durum="confirme">Confirmer</button>
+        <button class="b-yesil"   data-durum="termine">Terminé ✓</button>
+        <button class="b-gri"     data-durum="absent">Absent</button>
+        <button class="b-kirmizi" data-durum="annule">Annuler</button>
+      </div>
+
+      <div class="modal-ayirac"></div>
+
+      <label>Notes</label>
+      <textarea id="rvmNotlar" placeholder="Note sur ce rendez-vous…"></textarea>
+
+      <div class="modal-ayirac"></div>
+
+      <label>Modifier (service / date / heure)</label>
+      <select id="rvmHizmetSec"></select>
+      <input type="date" id="rvmTarihSec" style="margin-top:8px" />
+      <select id="rvmSaatSec" style="margin-top:8px"><option value="">—</option></select>
+
+      <button class="modal-buton" id="rvmKaydet">Enregistrer</button>
+    </div>
+  </div>
+
+  <!-- ================= MÜŞTERİ MODALI ================= -->
+  <div class="modal-katman" id="musModalKatman" hidden>
+    <div class="modal" id="musModal">
+      <button class="modal-kapat" id="musModalKapat" aria-label="Fermer">&times;</button>
+      <h3 id="musmAd">—</h3>
+      <p class="mus-tel"><a id="musmTel" href="#" style="color:var(--gri)">—</a></p>
+
+      <div class="bilgi-satir"><span class="k">Visites</span><span id="musmZiyaret">—</span></div>
+      <div class="bilgi-satir"><span class="k">Dernière visite</span><span id="musmSon">—</span></div>
+      <div class="bilgi-satir"><span class="k">Total dépensé</span><span id="musmTutar">—</span></div>
+
+      <label>Note client</label>
+      <textarea id="musmNot" placeholder="Note sur ce client…"></textarea>
+      <button class="modal-buton" id="musmKaydet">Enregistrer la note</button>
+
+      <div class="modal-ayirac"></div>
+      <div class="alt-baslik" style="margin-top:14px">Historique</div>
+      <div id="musmGecmis"></div>
+    </div>
+  </div>
+
+  <div class="toast-alan" id="toastAlan"></div>
+
+  <script src="lib-supabase.js"></script>
+  <script src="admin.js"></script>
+</body>
+</html>
