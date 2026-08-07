@@ -63,7 +63,7 @@ async function kullaniciDogrula(req) {
 // ==========================================================
 // BERBER AYARLARI — çalışma saatleri ve hizmet süreleri
 // ==========================================================
-const ACILIS  = 8 * 60;        // 08:00
+const ACILIS  = 8 * 60 + 30;   // 08:30
 const KAPANIS = 18 * 60 + 30;  // 18:30
 const ADIM    = 15;            // randevu başlangıçları 15 dk aralıklarla
 
@@ -128,6 +128,10 @@ async function doluAraliklar(tarih, kuafor) {
 
 // Bir gün + hizmet süresi + KUAFÖR için MÜSAİT başlangıç saatlerini hesapla.
 async function musaitSaatler(tarih, sure, kuafor) {
+  // Pazar (0) kapalı — hiç boş saat gösterilmez.
+  const gun = new Date(tarih + 'T00:00:00').getDay();
+  if (gun === 0) return [];
+
   const dolu = await doluAraliklar(tarih, kuafor);
   const buGun = tarih === bugunStr();
   const simdi = (() => { const d = new Date(); return d.getHours() * 60 + d.getMinutes(); })();

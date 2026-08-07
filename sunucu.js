@@ -71,7 +71,7 @@ const tipler = {
 // ==========================================================
 // BERBER AYARLARI — çalışma saatleri ve hizmet süreleri
 // ==========================================================
-const ACILIS  = 8 * 60;        // 08:00  (dakika cinsinden = 480)
+const ACILIS  = 8 * 60 + 30;   // 08:30  (dakika cinsinden = 510)
 const KAPANIS = 18 * 60 + 30;  // 18:30  (dakika cinsinden = 1110)
 const ADIM    = 15;            // randevu başlangıçları 15 dk aralıklarla
 
@@ -140,6 +140,10 @@ async function doluAraliklar(tarih, kuafor) {
 // Kurallar: 08:00–18:30 arası, hizmet kapanıştan önce bitmeli,
 // SEÇİLEN KUAFÖRÜN mevcut randevularıyla çakışmamalı, bugün ise geçmiş saatler gösterilmez.
 async function musaitSaatler(tarih, sure, kuafor) {
+  // Pazar (0) kapalı — hiç boş saat gösterilmez.
+  const gun = new Date(tarih + 'T00:00:00').getDay();
+  if (gun === 0) return [];
+
   const dolu = await doluAraliklar(tarih, kuafor);
   const buGun = tarih === bugunStr();
   const simdi = (() => { const d = new Date(); return d.getHours() * 60 + d.getMinutes(); })();

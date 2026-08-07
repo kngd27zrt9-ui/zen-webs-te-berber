@@ -56,12 +56,10 @@ body {
 /* ---------- KATMAN 2: ÖN PLAN (menü) ---------- */
 .menu {
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-end;   /* logo kaldırıldı; menü/hamburger sağda */
   align-items: center;
   padding: 20px 40px;
-  position: sticky;   /* yukarıda yapışık kalır */
-  top: 0;
-  background: transparent;   /* siyah zemin kaldırıldı, foto görünsün */
+  position: relative;   /* sayfayla birlikte kayar, üstte takılıp kalmaz */
   z-index: 10;
 }
 /* Zemin olmadığı için yazılar fotoğrafın üstünde okunsun diye gölge */
@@ -488,8 +486,8 @@ footer {
 @media (max-width: 600px) {
   .karsilama h1 { font-size: 40px; }
 
-  /* Mobil: logo solda, hamburger sağda; menü açılır panel */
-  .menu { justify-content: space-between; align-items: center; }
+  /* Mobil: logo kaldırıldı; hamburger sağda; menü açılır panel */
+  .menu { justify-content: flex-end; align-items: center; }
   .hamburger { display: block; }
   nav {
     position: absolute;
