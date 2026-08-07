@@ -3,10 +3,17 @@ randevular.json
 
 # Ortam değişkenleri — Supabase gizli anahtarı burada, ASLA paylaşılmaz
 .env
+.env.local
+.env.*.local
+.env.development.local
+.env.production.local
 
 # Node
 node_modules/
 npm-debug.log*
+
+# Vercel
+.vercel
 
 # Sistem / editör
 .DS_Store
