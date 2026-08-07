@@ -5,6 +5,8 @@
   <meta charset="UTF-8" />
   <!-- Telefonlarda da düzgün görünmesi için: -->
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <!-- Telefonların numarayı otomatik mavi "link" yapmasını engelle (beyaz kalsın). -->
+  <meta name="format-detection" content="telephone=no" />
   <title>Cece Barber</title>
 
   <!-- Görünüm (renkler, arka plan) bu dosyadan gelir: -->
@@ -26,8 +28,6 @@
 
   <!-- Üst menü -->
   <header class="menu">
-    <div class="logo">CECE <span>BARBER</span></div>
-
     <!-- Mobil hamburger düğmesi -->
     <button class="hamburger" id="hamburger" aria-label="Menu" aria-expanded="false">
       <span></span><span></span><span></span>
@@ -93,8 +93,8 @@
   <section id="iletisim" class="bolum iletisim">
     <h2>Contactez-nous</h2>
     <p>📍 12 Rue Exemple</p>
-    <p>📞 078 216 23 31</p>
-    <p>🕐 Tous les jours 08:00 - 18:30</p>
+    <p style="color:#ffffff"><a href="tel:+41782162331" style="color:#ffffff;text-decoration:none">📞 078 216 23 31</a></p>
+    <p>🕐 Lundi – Samedi : 08:30 - 18:30</p>
     <button class="buton randevu-ac">Prendre rendez-vous</button>
     <a href="tel:+41782162331" class="buton buton-cizgi">Appeler maintenant</a>
   </section>
