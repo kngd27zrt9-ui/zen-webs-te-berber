@@ -37,6 +37,9 @@
       <a href="#hizmetler">Services</a>
       <a href="#galeri">Galerie</a>
       <a href="#iletisim">Contact</a>
+      <!-- Oturum linki: giriş yoksa "Se connecter", varsa "Tableau de bord".
+           Flicker olmasın diye başta gizli; oturum.js durumu belirleyince açılır. -->
+      <a href="/admin" id="oturumLink" class="menu-vurgu" hidden>Se connecter</a>
     </nav>
   </header>
 
@@ -189,5 +192,8 @@
 
   <!-- Küçük hareketler bu dosyadan gelir: -->
   <script src="script.js"></script>
+  <!-- Supabase istemcisi + oturum durumuna göre menü linkini ayarla -->
+  <script src="lib-supabase.js"></script>
+  <script src="oturum.js"></script>
 </body>
 </html>
