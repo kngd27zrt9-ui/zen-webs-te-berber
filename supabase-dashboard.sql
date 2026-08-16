@@ -17,11 +17,17 @@ alter table public.randevular add column if not exists durum     text not null d
 alter table public.randevular add column if not exists notlar    text;
 alter table public.randevular add column if not exists fiyat     integer;  -- CHF
 
--- Eski "gün+saat tek randevu" kuralını kaldır, berber bazlı yeni kural koy
+-- Eski "gün+saat tek randevu" kurallarını kaldır.
 alter table public.randevular drop constraint if exists randevular_tarih_saat_key;
 alter table public.randevular drop constraint if exists randevular_tarih_saat_kuafor_key;
-create unique index if not exists randevular_barber_slot_uidx
-  on public.randevular (barber_id, tarih, saat);
+drop index if exists public.randevular_barber_slot_uidx;   -- eski (iptalleri de sayan) sürüm
+-- KISMİ benzersiz kural: yalnız aktif (durum <> 'annule') randevular saati
+-- "dolu" tutar. Böylece iptal edilen saat tekrar alınabilir; ama aynı
+-- gün+saat+kuaförde en fazla BİR aktif randevu olabilir (çift booking engeli).
+-- Ayrıntı ve kök neden için: supabase-iptal-slot.sql
+create unique index if not exists randevular_aktif_slot_uidx
+  on public.randevular (tarih, saat, kuafor)
+  where durum <> 'annule';
 create index if not exists randevular_barber_tarih_idx
   on public.randevular (barber_id, tarih);
 
