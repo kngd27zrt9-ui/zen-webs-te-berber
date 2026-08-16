@@ -111,8 +111,10 @@ function bugunStr() {
 }
 
 // Belirli bir GÜN + KUAFÖR için dolu zaman aralıklarını Supabase'den çıkar.
+// İptal edilen (annule) randevular yer kaplamaz -> berber iptal edince o saat
+// müşteri tarafında tekrar boş görünür.
 async function doluAraliklar(tarih, kuafor) {
-  let sorgu = veriIstemci().from(TABLO).select('saat, hizmet, sure').eq('tarih', tarih);
+  let sorgu = veriIstemci().from(TABLO).select('saat, hizmet, sure').eq('tarih', tarih).neq('durum', 'annule');
   if (kuafor) sorgu = sorgu.eq('kuafor', kuafor);
   const { data, error } = await sorgu;
   if (error) {
